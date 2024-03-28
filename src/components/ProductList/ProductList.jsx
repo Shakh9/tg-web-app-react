@@ -1,6 +1,6 @@
-import React from 'react';
-import ProductItem from '../ProductItem/ProductItem';
+import React, {useState} from 'react';
 import './ProductList.css';
+import ProductItem from '../ProductItem/ProductItem';
 import {useTelegram} from '../../hooks/useTelegram';
 
 const products = [
@@ -14,7 +14,7 @@ const products = [
     {id: '8', title: 'Соус', price: 100, description: 'Состав'},
 ]
 
-const getTotalPrice = (items) => {
+const getTotalPrice = (items = []) => {
     return items.reduce((acc, item) => {
         return acc += item.price
     }, 0)
@@ -22,6 +22,7 @@ const getTotalPrice = (items) => {
 
 const ProductList = () => {
     const [addedItems, setAddedItems] = useState([]);
+    const {tg, queryId} = useTelegram();
 
     const onAdd = (product) => {
         const alreadyAdded = addedItems.find(item => item.id === product.id);
